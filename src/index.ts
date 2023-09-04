@@ -51,7 +51,7 @@ export class ThreefoldWalletConnectorApi {
       .requestAccess()
   }
 
-  public static requestDecryptedAccount(decryptedMnemonic: string): Promise<string> {
+  public static requestDecryptedAccount(decryptedMnemonic: string): Promise<string | null> {
     return ThreefoldWalletConnectorApi
       ._installGuard("requestDecryptedAccount")
       ._api
@@ -70,6 +70,13 @@ export class ThreefoldWalletConnectorApi {
       ._installGuard("listenToPublicAccounts")
       ._api
       .listenToPublicAccounts(listener)
+  }
+
+  public static selectDecryptedAccount(): Promise<Account | null> {
+    return ThreefoldWalletConnectorApi
+      ._installGuard("selectDecryptedAccount")
+      ._api
+      .selectDecryptedAccount()
   }
 
   private static get _api() {

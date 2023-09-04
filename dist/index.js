@@ -47,6 +47,12 @@ export class ThreefoldWalletConnectorApi {
             ._api
             .listenToPublicAccounts(listener);
     }
+    static selectDecryptedAccount() {
+        return ThreefoldWalletConnectorApi
+            ._installGuard("selectDecryptedAccount")
+            ._api
+            .selectDecryptedAccount();
+    }
     static get _api() {
         return window[EXTENSION_HANDLER];
     }
