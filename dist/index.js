@@ -1,5 +1,6 @@
 const TF_WALLET_CONNECTOR_EXTENSION = "TF_WALLET_CONNECTOR_EXTENSION";
 const EXTENSION_HANDLER = TF_WALLET_CONNECTOR_EXTENSION + "_HANDLER";
+// prettier-ignore
 export class ThreefoldWalletConnectorApi {
     static isInstalledSync() {
         if (document.readyState !== "complete") {
@@ -29,17 +30,23 @@ export class ThreefoldWalletConnectorApi {
             ._api
             .requestAccess();
     }
-    static requestDecryptedAccount(decryptedMnemonic) {
+    static selectAccount(networks) {
+        return ThreefoldWalletConnectorApi
+            ._installGuard('selectAccount')
+            ._api
+            .selectAccount(networks);
+    }
+    static requestDecryptedAccount(decryptedMnemonic, networks) {
         return ThreefoldWalletConnectorApi
             ._installGuard("requestDecryptedAccount")
             ._api
-            .requestDecryptedAccount(decryptedMnemonic);
+            .requestDecryptedAccount(decryptedMnemonic, networks);
     }
-    static getPublicAccounts() {
+    static getPublicAccounts(networks) {
         return ThreefoldWalletConnectorApi
             ._installGuard("getPublicAccounts")
             ._api
-            .getPublicAccounts();
+            .getPublicAccounts(networks);
     }
     static listenToPublicAccounts(listener) {
         return ThreefoldWalletConnectorApi
@@ -47,11 +54,14 @@ export class ThreefoldWalletConnectorApi {
             ._api
             .listenToPublicAccounts(listener);
     }
-    static selectDecryptedAccount() {
+    static selectDecryptedAccount(networks) {
         return ThreefoldWalletConnectorApi
             ._installGuard("selectDecryptedAccount")
             ._api
-            .selectDecryptedAccount();
+            .selectDecryptedAccount(networks);
+    }
+    static sign() {
+        throw new Error('Sign method is not yet implemented.');
     }
     static get _api() {
         return window[EXTENSION_HANDLER];

@@ -11,6 +11,16 @@ export interface Account {
   visible: boolean
 }
 
+export interface PublicAccount {
+  name: string
+  mnemonic: string
+  address: string
+  encryptedMnemonic: boolean
+  metadata: { [network: string]: { twinId: string | null; ssh: string | null } }
+  networks: string[]
+}
+
+// prettier-ignore
 export class ThreefoldWalletConnectorApi {
   public static isInstalledSync(): boolean {
     if (document.readyState !== "complete") {
@@ -51,18 +61,25 @@ export class ThreefoldWalletConnectorApi {
       .requestAccess()
   }
 
-  public static requestDecryptedAccount(decryptedMnemonic: string): Promise<string | null> {
+  public static selectAccount(networks?: string | string[]): Promise<PublicAccount | null> {
+    return ThreefoldWalletConnectorApi
+      ._installGuard('selectAccount')
+      ._api
+      .selectAccount(networks)
+  }
+
+  public static requestDecryptedAccount(decryptedMnemonic: string, networks?: string | string[]): Promise<string | null> {
     return ThreefoldWalletConnectorApi
       ._installGuard("requestDecryptedAccount")
       ._api
-      .requestDecryptedAccount(decryptedMnemonic)
+      .requestDecryptedAccount(decryptedMnemonic, networks)
   }
 
-  public static getPublicAccounts(): Promise<Account[]> {
+  public static getPublicAccounts(networks?: string | string[]): Promise<Account[]> {
     return ThreefoldWalletConnectorApi
       ._installGuard("getPublicAccounts")
       ._api
-      .getPublicAccounts()
+      .getPublicAccounts(networks)
   }
 
   public static listenToPublicAccounts(listener: (accounts: Account[]) => void): () => void {
@@ -72,11 +89,15 @@ export class ThreefoldWalletConnectorApi {
       .listenToPublicAccounts(listener)
   }
 
-  public static selectDecryptedAccount(): Promise<Account | null> {
+  public static selectDecryptedAccount(networks?:  string | string[]): Promise<PublicAccount | null> {
     return ThreefoldWalletConnectorApi
       ._installGuard("selectDecryptedAccount")
       ._api
-      .selectDecryptedAccount()
+      .selectDecryptedAccount(networks)
+  }
+
+  public static sign() {
+    throw new Error('Sign method is not yet implemented.')
   }
 
   private static get _api() {
