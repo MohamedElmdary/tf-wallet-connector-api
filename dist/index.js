@@ -60,8 +60,11 @@ export class ThreefoldWalletConnectorApi {
             ._api
             .selectDecryptedAccount(networks);
     }
-    static sign() {
-        throw new Error('Sign method is not yet implemented.');
+    static signTransaction(content, mnemonic, keypairType) {
+        return ThreefoldWalletConnectorApi
+            ._installGuard("signTransaction")
+            ._api
+            .signTransaction(content, mnemonic, keypairType);
     }
     static get _api() {
         return window[EXTENSION_HANDLER];

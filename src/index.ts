@@ -20,6 +20,11 @@ export interface PublicAccount {
   networks: string[]
 }
 
+export interface SignReturn {
+  publicKey: string
+  signature: string
+}
+
 // prettier-ignore
 export class ThreefoldWalletConnectorApi {
   public static isInstalledSync(): boolean {
@@ -96,8 +101,11 @@ export class ThreefoldWalletConnectorApi {
       .selectDecryptedAccount(networks)
   }
 
-  public static sign() {
-    throw new Error('Sign method is not yet implemented.')
+  public static signTransaction(content: string, mnemonic: string, keypairType: 'sr25519' | 'ed25519'): Promise<SignReturn | null> {
+    return ThreefoldWalletConnectorApi
+      ._installGuard("signTransaction")
+      ._api
+      .signTransaction(content, mnemonic, keypairType)
   }
 
   private static get _api() {
