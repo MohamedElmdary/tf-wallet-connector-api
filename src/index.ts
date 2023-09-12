@@ -101,11 +101,11 @@ export class ThreefoldWalletConnectorApi {
       .selectDecryptedAccount(networks)
   }
 
-  public static signTransaction(content: string, mnemonic: string, keypairType: 'sr25519' | 'ed25519'): Promise<SignReturn | null> {
+  public static sign(content: string, mnemonic: string, keypairType: 'sr25519' | 'ed25519'): Promise<SignReturn | null> {
     return ThreefoldWalletConnectorApi
-      ._installGuard("signTransaction")
+      ._installGuard("sign")
       ._api
-      .signTransaction(content, mnemonic, keypairType)
+      .sign(content, mnemonic, keypairType)
   }
 
   private static get _api() {

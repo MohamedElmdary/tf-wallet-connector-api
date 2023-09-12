@@ -60,11 +60,11 @@ export class ThreefoldWalletConnectorApi {
             ._api
             .selectDecryptedAccount(networks);
     }
-    static signTransaction(content, mnemonic, keypairType) {
+    static sign(content, mnemonic, keypairType) {
         return ThreefoldWalletConnectorApi
-            ._installGuard("signTransaction")
+            ._installGuard("sign")
             ._api
-            .signTransaction(content, mnemonic, keypairType);
+            .sign(content, mnemonic, keypairType);
     }
     static get _api() {
         return window[EXTENSION_HANDLER];

@@ -1,6 +1,10 @@
 {
-  "name": "tf-wallet-connector-api",
-  "version": "1.0.0",
+  "name": "@threefold/extension_api",
+  "version": "0.0.1-rc3",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
